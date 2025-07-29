@@ -1,0 +1,140 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - TaskFlow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <a href="dashboard.html" class="active">Dashboard</a>
+            <a href="task.html">My Tasks</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="team.html">Team</a>
+            <div class="profile-button">
+                <div class="profile-section">
+                    <div class="profile-initials" id="profileInitials"></div>
+                    <div class="profile-info">
+                        <h3 id="profileName"></h3>
+                        <p id="profileEmail"></p>
+                    </div>
+                    <span class="settings-icon" onclick="window.location.href='profile.html'">⚙️</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="logo">📋 TaskFlow</div>
+                <div class="search-bar">
+                    <input type="text" id="search" placeholder="Search tasks...">
+                </div>
+                <div class="header-icons">
+                    <span class="icon notification">🔔</span>
+                    <span class="icon message">✉️</span>
+                </div>
+            </div>
+            <div class="greeting">
+                <h1 id="greeting"></h1>
+                <p>Here’s what’s happening with your tasks today</p>
+            </div>
+            <div class="stats-section">
+                <div class="stats-cards">
+                    <div class="card">
+                        <h3>Total Tasks</h3>
+                        <p id="totalTasks">0 <span class="trend up">↑ 0%</span></p>
+                    </div>
+                    <div class="card">
+                        <h3>Completed</h3>
+                        <p id="completedTasks">0 <span class="trend up">↑ 0%</span></p>
+                    </div>
+                    <div class="card">
+                        <h3>In Progress</h3>
+                        <p id="inProgressTasks">0 <span class="trend up">↑ 0%</span></p>
+                    </div>
+                    <div class="card">
+                        <h3>Overdue</h3>
+                        <p id="overdueTasks">0 <span class="trend up">↑ 0%</span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="weekly-progress-section">
+                <div class="weekly-progress">
+                    <div class="progress-header">
+                        <h2>Weekly Progress</h2>
+                        <span>THIS WEEK</span>
+                    </div>
+                    <h3>Task Completion</h3>
+                    <div class="progress-bar">
+                        <div id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <div class="progress-stats">
+                        <div>
+                            <h3>Tasks by Status</h3>
+                            <p><span class="dot completed"></span> Completed <span class="count" id="completedCount">0 (0%)</span></p>
+                            <p><span class="dot in-progress"></span> In Progress <span class="count" id="inProgressCount">0 (0%)</span></p>
+                            <p><span class="dot overdue"></span> Overdue <span class="count" id="overdueCount">0 (0%)</span></p>
+                        </div>
+                        <div>
+                            <h3>Tasks by Priority</h3>
+                            <p><span class="dot high"></span> High Priority <span class="count" id="highPriorityCount">0 (0%)</span></p>
+                            <p><span class="dot medium"></span> Medium Priority <span class="count" id="mediumPriorityCount">0 (0%)</span></p>
+                            <p><span class="dot low"></span> Low Priority <span class="count" id="lowPriorityCount">0 (0%)</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tasks-section">
+                <div class="section-header">
+                    <h2>Today’s Tasks</h2>
+                    <a href="add_task.html" class="add-task-btn">+ Add Task</a>
+                </div>
+                <div class="task-list" id="taskList"></div>
+                <a href="task.html" class="view-all">View All Tasks</a>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Calendar</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="task.html">My Tasks</a>
+            <a href="calendar.html" class="active">Calendar</a>
+            <a href="team.html">Team</a>
+            <div class="profile-section">
+                <div class="profile-initials" id="profileInitials"></div>
+                <div class="profile-info">
+                    <h3 id="profileName"></h3>
+                    <p id="profileEmail"></p>
+                </div>
+                <span class="settings-icon">⚙️</span>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="logo">📋 TaskFlow</div>
+                <div class="header-icons">
+                    <span class="icon notification">🔔</span>
+                    <span class="icon">✉️</span>
+                </div>
+            </div>
+            <div class="calendar-section">
+                <h2>Calendar</h2>
+                <div class="progress-header">
+                    <span id="currentMonth"></span>
+                    <div>
+                        <button class="save-btn" onclick="changeMonth(-1)">Previous</button>
+                        <button class="save-btn" onclick="changeMonth(1)">Next</button>
+                    </div>
+                </div>
+                <div id="calendarGrid" class="calendar-grid"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

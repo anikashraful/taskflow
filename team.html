@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team - TaskFlow</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="task.html">My Tasks</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="team.html" class="active">Team</a>
+            <div class="profile-button">
+                <div class="profile-section">
+                    <div class="profile-initials" id="profileInitials"></div>
+                    <div class="profile-info">
+                        <h3 id="profileName"></h3>
+                        <p id="profileEmail"></p>
+                    </div>
+                    <span class="settings-icon" onclick="window.location.href='profile.html'">⚙️</span>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="logo">📋 TaskFlow</div>
+                <div class="search-bar">
+                    <input type="text" id="search" placeholder="Search team...">
+                </div>
+                <div class="header-icons">
+                    <span class="icon notification">🔔</span>
+                    <span class="icon message">✉️</span>
+                </div>
+            </div>
+            <h1>Team</h1>
+            <div class="team-section">
+                <div class="team-form">
+                    <h2>Add Team Member</h2>
+                    <form id="addTeamForm">
+                        <div class="form-group">
+                            <label for="teamName">Full Name</label>
+                            <input type="text" id="teamName" name="teamName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="teamEmail">Email</label>
+                            <input type="email" id="teamEmail" name="teamEmail" required>
+                        </div>
+                        <button type="submit" class="save-btn">Add Member</button>
+                    </form>
+                </div>
+                <div class="team-list" id="teamList"></div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

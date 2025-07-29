@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskFlow - Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="task.html">My Tasks</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="team.html">Team</a>
+            <div class="profile-section">
+                <div class="profile-initials" id="profileInitials"></div>
+                <div class="profile-info">
+                    <h3 id="profileName"></h3>
+                    <p id="profileEmail"></p>
+                </div>
+                <span class="settings-icon">⚙️</span>
+            </div>
+        </div>
+        <div class="main-content">
+            <div class="header">
+                <div class="logo">📋 TaskFlow</div>
+                <div class="header-icons">
+                    <span class="icon notification">🔔</span>
+                    <span class="icon">✉️</span>
+                </div>
+            </div>
+            <div class="profile-section-main">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <div class="profile-initials" id="profileLargeInitials"></div>
+                        <h2 id="profileFullName"></h2>
+                        <p id="profileEmailMain"></p>
+                    </div>
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bio">Bio</label>
+                            <textarea id="bio"></textarea>
+                        </div>
+                        <button type="submit" class="save-btn">Save Changes</button>
+                    </form>
+                    <div class="profile-stats">
+                        <h3>Your Stats</h3>
+                        <p>Total Tasks: <span id="profileTotalTasks">0</span></p>
+                        <p>Completed Tasks: <span id="profileCompletedTasks">0</span></p>
+                        <p>Tasks In Progress: <span id="profileInProgressTasks">0</span></p>
+                        <button class="save-btn" onclick="downloadTasks()">Download Tasks</button>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
